@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Users, PawPrint, Beef, PlusCircle, FileText, Printer, Tag, Receipt, Sword } from "lucide-react";
+import { Users, PawPrint, Beef, FileText, Tag, Receipt, Sword } from "lucide-react";
 
 const linkClass = ({ isActive }) =>
   `flex items-center gap-3 p-2 rounded-lg transition-colors ${
@@ -30,18 +30,10 @@ export default function Sidebar() {
           <Beef className="w-5 h-5" />
           Data Sapi
         </NavLink>
-        <NavLink to="/sapi/add" className={linkClass}>
-          <PlusCircle className="w-5 h-5" />
-          Tambah Sapi
-        </NavLink>
 
         <NavLink to="/domba" className={linkClass}>
           <PawPrint className="w-5 h-5" />
           Data Domba
-        </NavLink>
-        <NavLink to="/domba/add" className={linkClass}>
-          <PlusCircle className="w-5 h-5" />
-          Tambah Domba
         </NavLink>
 
         <div className="mt-4 text-sm font-medium text-slate-500 uppercase">

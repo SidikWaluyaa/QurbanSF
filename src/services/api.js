@@ -1,25 +1,79 @@
-// Replace with your deployed Google Apps Script Web App URL
-export const GAS_URL = "https://script.google.com/macros/s/AKfycbw8w5UfbQfr7vrOBpYjJTZwai9NmwH7l-Zsvv2o54IKamWiYv4-PBvTKpanrDZfGV32Dw/exec";
+// Google Sheets direct CSV export URLs
+export const SAPI_CSV_URL = "https://docs.google.com/spreadsheets/d/1nG5P96DvspJEm83JJefMJVbPilpCrnwicUAGtbxYn6c/export?format=csv&gid=0";
+export const DOMBA_CSV_URL = "https://docs.google.com/spreadsheets/d/1nG5P96DvspJEm83JJefMJVbPilpCrnwicUAGtbxYn6c/export?format=csv&gid=348281610";
+
+// Robust and clean CSV to JSON Parser
+const parseCSV = (csvText) => {
+  const lines = [];
+  let currentLine = [];
+  let currentVal = '';
+  let inQuotes = false;
+  
+  for (let i = 0; i < csvText.length; i++) {
+    const char = csvText[i];
+    const nextChar = csvText[i + 1];
+    
+    if (inQuotes) {
+      if (char === '"') {
+        if (nextChar === '"') {
+          currentVal += '"';
+          i++; // Skip next quote
+        } else {
+          inQuotes = false;
+        }
+      } else {
+        currentVal += char;
+      }
+    } else {
+      if (char === '"') {
+        inQuotes = true;
+      } else if (char === ',') {
+        currentLine.push(currentVal.trim());
+        currentVal = '';
+      } else if (char === '\r' || char === '\n') {
+        currentLine.push(currentVal.trim());
+        currentVal = '';
+        if (currentLine.some(val => val !== '')) {
+          lines.push(currentLine);
+        }
+        currentLine = [];
+        if (char === '\r' && nextChar === '\n') {
+          i++;
+        }
+      } else {
+        currentVal += char;
+      }
+    }
+  }
+  
+  if (currentVal !== '' || currentLine.length > 0) {
+    currentLine.push(currentVal.trim());
+    lines.push(currentLine);
+  }
+  
+  if (lines.length === 0) return [];
+  
+  const headers = lines[0].map(h => h.toUpperCase().trim());
+  const rows = lines.slice(1);
+  
+  return rows.map(row => {
+    const obj = {};
+    headers.forEach((header, idx) => {
+      obj[header] = row[idx] || '';
+    });
+    return obj;
+  });
+};
 
 export const fetchSheetData = async (sheetName) => {
-  if (!GAS_URL || GAS_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
-    console.warn("GAS_URL is not set.");
-    return [];
-  }
-
+  const url = sheetName === "Sapi" ? SAPI_CSV_URL : DOMBA_CSV_URL;
+  
   try {
-    const response = await fetch(GAS_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({
-        action: "GET_DATA",
-        sheetName: sheetName,
-      }),
-    });
-    const result = await response.json();
-    console.log("Response dari Google Apps Script:", result);
-
-    let rawData = result.data || [];
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Gagal mengambil data dari Google Sheets");
+    
+    const csvText = await response.text();
+    const rawData = parseCSV(csvText);
     let normalizedData = [];
 
     if (sheetName === "Sapi") {
@@ -58,29 +112,7 @@ export const fetchSheetData = async (sheetName) => {
   }
 };
 
-// --- CRUD helper functions ---
-export const createRow = async (sheetName, payload) => {
-  return await postAction("INSERT", sheetName, payload);
-};
-
-export const updateRow = async (sheetName, payload) => {
-  return await postAction("UPDATE", sheetName, payload);
-};
-
-export const deleteRow = async (sheetName, id) => {
-  return await postAction("DELETE", sheetName, { id });
-};
-
-// internal generic POST helper
-const postAction = async (action, sheetName, data) => {
-  if (!GAS_URL) return [];
-  const body = { action, sheetName, ...data };
-  const response = await fetch(GAS_URL, {
-    method: "POST",
-    headers: { "Content-Type": "text/plain;charset=utf-8" },
-    body: JSON.stringify(body),
-  });
-  const result = await response.json();
-  console.log(`Response ${action}:`, result);
-  return result;
-};
+// CRUD placeholders since data is managed directly in Google Sheets by user request
+export const createRow = async () => {};
+export const updateRow = async () => {};
+export const deleteRow = async () => {};
