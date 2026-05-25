@@ -4,7 +4,7 @@ import { fetchSheetData } from '../services/api';
 import { Printer } from 'lucide-react';
 
 const PrintMuqarrib = () => {
-  const [sapiData, setSapiData] = useState([]);
+  const [sapiData, setSapiData] = useState({});
   const [dombaData, setDombaData] = useState([]);
   const [activeTab, setActiveTab] = useState('sapi');
   const [loading, setLoading] = useState(true);

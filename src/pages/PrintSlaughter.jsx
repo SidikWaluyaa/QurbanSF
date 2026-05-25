@@ -5,7 +5,7 @@ import { Printer } from 'lucide-react';
 import { PrintHeader } from './PrintMuqarrib';
 
 const PrintSlaughter = () => {
-  const [sapiData, setSapiData] = useState([]);
+  const [sapiData, setSapiData] = useState({});
   const [dombaData, setDombaData] = useState([]);
   const [loading, setLoading] = useState(true);
   const printRef = useRef();
