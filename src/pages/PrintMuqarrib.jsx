@@ -116,7 +116,6 @@ const PrintMuqarrib = () => {
                   <th className="border-2 border-black p-2 text-center w-16">NO</th>
                   <th className="border-2 border-black p-2 text-center w-36">NO. DOMBA</th>
                   <th className="border-2 border-black p-2 text-center">NAMA MUQORRIB</th>
-                  <th className="border-2 border-black p-2 text-center w-48">PESANAN</th>
                 </tr>
               </thead>
               <tbody>
@@ -125,7 +124,6 @@ const PrintMuqarrib = () => {
                     <td className="border border-black p-2 text-center font-medium">{idx + 1}</td>
                     <td className="border border-black p-2 text-center font-bold uppercase text-xs">DOMBA NO. {m.NO}</td>
                     <td className="border border-black p-2 pl-4 uppercase font-medium">{m.NAMA_MUQORRIB}</td>
-                    <td className="border border-black p-2 text-center uppercase text-xs font-semibold">{m.PESANAN}</td>
                   </tr>
                 ))}
               </tbody>
