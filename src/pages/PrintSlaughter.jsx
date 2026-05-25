@@ -63,26 +63,24 @@ const PrintSlaughter = () => {
                 <th className="border-2 border-black p-2 text-center w-2/3">NAMA MUQORRIB</th>
               </tr>
             </thead>
-            <tbody>
-              {Object.keys(sapiData).map((sapiKey, index) => {
-                const muqarribs = sapiData[sapiKey];
-                return (
-                  <React.Fragment key={index}>
-                    {muqarribs.map((m, mIdx) => (
-                      <tr key={mIdx}>
-                        {mIdx === 0 && (
-                          <td className="border border-black p-2 font-bold text-center text-lg uppercase" rowSpan={muqarribs.length}>
-                            {sapiKey}
-                          </td>
-                        )}
-                        <td className="border border-black p-2 text-center w-12 font-medium">{m.NO || (mIdx + 1)}</td>
-                        <td className="border border-black p-2 pl-4 uppercase font-medium">{m.NAMA_MUQORRIB}</td>
-                      </tr>
-                    ))}
-                  </React.Fragment>
-                );
-              })}
-            </tbody>
+            {Object.keys(sapiData).map((sapiKey, index) => {
+              const muqarribs = sapiData[sapiKey];
+              return (
+                <tbody key={index} className="avoid-page-break">
+                  {muqarribs.map((m, mIdx) => (
+                    <tr key={mIdx} className="avoid-page-break-row">
+                      {mIdx === 0 && (
+                        <td className="border border-black p-2 font-bold text-center text-lg uppercase" rowSpan={muqarribs.length}>
+                          {sapiKey}
+                        </td>
+                      )}
+                      <td className="border border-black p-2 text-center w-12 font-medium">{m.NO || (mIdx + 1)}</td>
+                      <td className="border border-black p-2 pl-4 uppercase font-medium">{m.NAMA_MUQORRIB}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              );
+            })}
           </table>
 
           <div className="page-break-before mt-12"></div>

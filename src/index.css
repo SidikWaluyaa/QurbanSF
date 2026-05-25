@@ -51,4 +51,12 @@
     border: 1px solid #000 !important;
     box-shadow: none !important;
   }
+  .avoid-page-break {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+  .avoid-page-break-row {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
 }
