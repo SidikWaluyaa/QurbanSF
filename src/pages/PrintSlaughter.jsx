@@ -93,7 +93,6 @@ const PrintSlaughter = () => {
               <tr>
                 <th className="border-2 border-black p-2 text-center w-16">NO</th>
                 <th className="border-2 border-black p-2 text-center">NAMA MUQORRIB</th>
-                <th className="border-2 border-black p-2 text-center w-48">PESANAN</th>
               </tr>
             </thead>
             <tbody>
@@ -101,7 +100,6 @@ const PrintSlaughter = () => {
                 <tr key={idx}>
                   <td className="border border-black p-2 text-center font-medium">{idx + 1}</td>
                   <td className="border border-black p-2 pl-4 uppercase font-medium">{m.NAMA_MUQORRIB}</td>
-                  <td className="border border-black p-2 text-center uppercase text-xs">{m.PESANAN}</td>
                 </tr>
               ))}
             </tbody>
