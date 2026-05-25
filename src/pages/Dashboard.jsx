@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchSheetData } from '../services/api';
 import { Users, Activity, Award, PlusCircle, BarChart2, CheckCircle2 } from 'lucide-react';
-import DataCard from '../components/DataCard';
 
 const Dashboard = () => {
   const [sapiData, setSapiData] = useState([]);
@@ -225,11 +224,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Tables Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <DataCard title="Data Muqarrib Sapi" data={sapiData} type="sapi" onRefresh={loadData} />
-            <DataCard title="Data Muqarrib Domba" data={dombaData} type="domba" onRefresh={loadData} />
-          </div>
         </div>
       )}
     </div>
